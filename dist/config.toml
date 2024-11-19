@@ -1,0 +1,11 @@
+fullscreen = false
+input_emu = true
+card_emu = true
+dongle = "285013501138"
+# 1% deadzone
+deadzone = 0.01
+
+width = 640
+height = 480
+
+ya_card_emu = false
