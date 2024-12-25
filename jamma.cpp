@@ -154,6 +154,13 @@ void handle_inputs(uint8_t *a1)
     *(float *)(a1 + 0x34) = brake;
 }
 
+void jamma::key_callback(int key, int scancode, int action, int mods)
+{
+    if (!SDL_STATE_INITIALIZED)
+        return;
+    SDL_STATE.key_callback(key, scancode, action, mods);
+}
+
 void jamma::init()
 {
     Line::Hook(Line::DlSym(NULL, "_ZN10clSystemN24initEb"), (void *)adachi, NULL);

@@ -32,7 +32,7 @@ namespace poll
     struct KeyBinding
     {
         KeybindingType type;
-        SDL_Keycode keycode;
+        int keycode;
         SDL_GameControllerButton button;
         Axis axis;
     };
@@ -42,50 +42,54 @@ namespace poll
         std::vector<KeyBinding> keys = {};
     };
 
+    struct KeyEvent {
+        int key; int scancode; int action; int mods;
+    };
+
     struct PollState
     {
         std::unordered_map<uint32_t, SDL_GameController *> controllers;
-        SDL_Window *window;
         float deadzone;
-        std::vector<SDL_Keycode> keyboard_state;
-        std::vector<SDL_Keycode> last_keyboard_state;
+        std::vector<int> keyboard_state;
+        std::vector<int> last_keyboard_state;
         std::vector<SDL_GameControllerButton> button_state;
         std::vector<SDL_GameControllerButton> last_button_state;
         std::unordered_map<Axis, float> axis_state;
         std::unordered_map<Axis, float> last_axis_state;
         void *window_handle;
+        std::vector<KeyEvent> key_events;
 
         static PollState create(void *window_handle, float axis_deadzone);
 
         void update();
 
-        bool keycode_is_down(SDL_Keycode keycode)
+        bool keycode_is_down(int keycode)
         {
             for (size_t i = 0; i < this->keyboard_state.size(); i++)
                 if (this->keyboard_state[i] == keycode)
                     return true;
             return false;
         }
-        bool keycode_is_up(SDL_Keycode keycode)
+        bool keycode_is_up(int keycode)
         {
             return !this->keycode_is_down(keycode);
         }
-        bool keycode_was_down(SDL_Keycode keycode)
+        bool keycode_was_down(int keycode)
         {
             for (size_t i = 0; i < this->last_keyboard_state.size(); i++)
                 if (this->last_keyboard_state[i] == keycode)
                     return true;
             return false;
         }
-        bool keycode_was_up(SDL_Keycode keycode)
+        bool keycode_was_up(int keycode)
         {
             return !this->keycode_was_down(keycode);
         }
-        bool keycode_is_tapped(SDL_Keycode keycode)
+        bool keycode_is_tapped(int keycode)
         {
             return this->keycode_is_down(keycode) && this->keycode_was_up(keycode);
         }
-        bool keycode_is_released(SDL_Keycode keycode)
+        bool keycode_is_released(int keycode)
         {
             return this->keycode_is_up(keycode) && this->keycode_was_down(keycode);
         }
@@ -277,6 +281,8 @@ namespace poll
                     return true;
             return false;
         }
+
+        void key_callback(int key, int scancode, int action, int mods);
     };
 
     KeyBindings parse_keybinding(std::vector<std::string> toml);

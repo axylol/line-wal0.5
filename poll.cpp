@@ -2,70 +2,71 @@
 #include <SDL2/SDL_syswm.h>
 #include "lib.h"
 #include "common.h"
+#include <GLFW/glfw3.h>
 
 #define KB_KEYCODE(name) {poll::KeybindingType::Keycode, name, SDL_CONTROLLER_BUTTON_A, poll::Axis::LeftStickLeft}
-#define CB_BUTTON(name) {poll::KeybindingType::Button, SDLK_a, name, poll::Axis::LeftStickLeft}
-#define CB_AXIS(name) {poll::KeybindingType::Axis, SDLK_a, SDL_CONTROLLER_BUTTON_A, name}
+#define CB_BUTTON(name) {poll::KeybindingType::Button, GLFW_KEY_A, name, poll::Axis::LeftStickLeft}
+#define CB_AXIS(name) {poll::KeybindingType::Axis, GLFW_KEY_A, SDL_CONTROLLER_BUTTON_A, name}
 
 std::unordered_map<std::string, poll::KeyBinding> MAPPINGS = {
-    {"F1", KB_KEYCODE(SDLK_F1)},
-    {"F2", KB_KEYCODE(SDLK_F2)},
-    {"F3", KB_KEYCODE(SDLK_F3)},
-    {"F4", KB_KEYCODE(SDLK_F4)},
-    {"F5", KB_KEYCODE(SDLK_F5)},
-    {"F6", KB_KEYCODE(SDLK_F6)},
-    {"F7", KB_KEYCODE(SDLK_F7)},
-    {"F8", KB_KEYCODE(SDLK_F8)},
-    {"F9", KB_KEYCODE(SDLK_F9)},
-    {"F10", KB_KEYCODE(SDLK_F10)},
-    {"F11", KB_KEYCODE(SDLK_F11)},
-    {"F12", KB_KEYCODE(SDLK_F12)},
-    {"NUM0", KB_KEYCODE(SDLK_0)},
-    {"NUM1", KB_KEYCODE(SDLK_1)},
-    {"NUM2", KB_KEYCODE(SDLK_2)},
-    {"NUM3", KB_KEYCODE(SDLK_3)},
-    {"NUM4", KB_KEYCODE(SDLK_4)},
-    {"NUM5", KB_KEYCODE(SDLK_5)},
-    {"NUM6", KB_KEYCODE(SDLK_6)},
-    {"NUM7", KB_KEYCODE(SDLK_7)},
-    {"NUM8", KB_KEYCODE(SDLK_8)},
-    {"NUM9", KB_KEYCODE(SDLK_9)},
-    {"UPARROW", KB_KEYCODE(SDLK_UP)},
-    {"LEFTARROW", KB_KEYCODE(SDLK_LEFT)},
-    {"DOWNARROW", KB_KEYCODE(SDLK_DOWN)},
-    {"RIGHTARROW", KB_KEYCODE(SDLK_RIGHT)},
-    {"ENTER", KB_KEYCODE(SDLK_RETURN2)},
-    {"SPACE", KB_KEYCODE(SDLK_SPACE)},
-    {"CONTROL", KB_KEYCODE(SDLK_LCTRL)},
-    {"SHIFT", KB_KEYCODE(SDLK_LSHIFT)},
-    {"TAB", KB_KEYCODE(SDLK_TAB)},
-    {"ESCAPE", KB_KEYCODE(SDLK_ESCAPE)},
-    {"A", KB_KEYCODE(SDLK_a)},
-    {"B", KB_KEYCODE(SDLK_b)},
-    {"C", KB_KEYCODE(SDLK_c)},
-    {"D", KB_KEYCODE(SDLK_d)},
-    {"E", KB_KEYCODE(SDLK_e)},
-    {"F", KB_KEYCODE(SDLK_f)},
-    {"G", KB_KEYCODE(SDLK_g)},
-    {"H", KB_KEYCODE(SDLK_h)},
-    {"I", KB_KEYCODE(SDLK_i)},
-    {"J", KB_KEYCODE(SDLK_j)},
-    {"K", KB_KEYCODE(SDLK_k)},
-    {"L", KB_KEYCODE(SDLK_l)},
-    {"M", KB_KEYCODE(SDLK_m)},
-    {"N", KB_KEYCODE(SDLK_n)},
-    {"O", KB_KEYCODE(SDLK_o)},
-    {"P", KB_KEYCODE(SDLK_p)},
-    {"Q", KB_KEYCODE(SDLK_q)},
-    {"R", KB_KEYCODE(SDLK_r)},
-    {"S", KB_KEYCODE(SDLK_s)},
-    {"T", KB_KEYCODE(SDLK_t)},
-    {"U", KB_KEYCODE(SDLK_u)},
-    {"V", KB_KEYCODE(SDLK_v)},
-    {"W", KB_KEYCODE(SDLK_w)},
-    {"X", KB_KEYCODE(SDLK_x)},
-    {"Y", KB_KEYCODE(SDLK_y)},
-    {"Z", KB_KEYCODE(SDLK_z)},
+    {"F1", KB_KEYCODE(GLFW_KEY_F1)},
+    {"F2", KB_KEYCODE(GLFW_KEY_F2)},
+    {"F3", KB_KEYCODE(GLFW_KEY_F3)},
+    {"F4", KB_KEYCODE(GLFW_KEY_F4)},
+    {"F5", KB_KEYCODE(GLFW_KEY_F5)},
+    {"F6", KB_KEYCODE(GLFW_KEY_F6)},
+    {"F7", KB_KEYCODE(GLFW_KEY_F7)},
+    {"F8", KB_KEYCODE(GLFW_KEY_F8)},
+    {"F9", KB_KEYCODE(GLFW_KEY_F9)},
+    {"F10", KB_KEYCODE(GLFW_KEY_F10)},
+    {"F11", KB_KEYCODE(GLFW_KEY_F11)},
+    {"F12", KB_KEYCODE(GLFW_KEY_F12)},
+    {"NUM0", KB_KEYCODE(GLFW_KEY_0)},
+    {"NUM1", KB_KEYCODE(GLFW_KEY_1)},
+    {"NUM2", KB_KEYCODE(GLFW_KEY_2)},
+    {"NUM3", KB_KEYCODE(GLFW_KEY_3)},
+    {"NUM4", KB_KEYCODE(GLFW_KEY_4)},
+    {"NUM5", KB_KEYCODE(GLFW_KEY_5)},
+    {"NUM6", KB_KEYCODE(GLFW_KEY_6)},
+    {"NUM7", KB_KEYCODE(GLFW_KEY_7)},
+    {"NUM8", KB_KEYCODE(GLFW_KEY_8)},
+    {"NUM9", KB_KEYCODE(GLFW_KEY_9)},
+    {"UPARROW", KB_KEYCODE(GLFW_KEY_UP)},
+    {"LEFTARROW", KB_KEYCODE(GLFW_KEY_LEFT)},
+    {"DOWNARROW", KB_KEYCODE(GLFW_KEY_DOWN)},
+    {"RIGHTARROW", KB_KEYCODE(GLFW_KEY_RIGHT)},
+    {"ENTER", KB_KEYCODE(GLFW_KEY_ENTER)},
+    {"SPACE", KB_KEYCODE(GLFW_KEY_SPACE)},
+    {"CONTROL", KB_KEYCODE(GLFW_KEY_LEFT_CONTROL)},
+    {"SHIFT", KB_KEYCODE(GLFW_KEY_LEFT_SHIFT)},
+    {"TAB", KB_KEYCODE(GLFW_KEY_TAB)},
+    {"ESCAPE", KB_KEYCODE(GLFW_KEY_ESCAPE)},
+    {"A", KB_KEYCODE(GLFW_KEY_A)},
+    {"B", KB_KEYCODE(GLFW_KEY_B)},
+    {"C", KB_KEYCODE(GLFW_KEY_C)},
+    {"D", KB_KEYCODE(GLFW_KEY_D)},
+    {"E", KB_KEYCODE(GLFW_KEY_E)},
+    {"F", KB_KEYCODE(GLFW_KEY_F)},
+    {"G", KB_KEYCODE(GLFW_KEY_G)},
+    {"H", KB_KEYCODE(GLFW_KEY_H)},
+    {"I", KB_KEYCODE(GLFW_KEY_I)},
+    {"J", KB_KEYCODE(GLFW_KEY_J)},
+    {"K", KB_KEYCODE(GLFW_KEY_K)},
+    {"L", KB_KEYCODE(GLFW_KEY_L)},
+    {"M", KB_KEYCODE(GLFW_KEY_M)},
+    {"N", KB_KEYCODE(GLFW_KEY_N)},
+    {"O", KB_KEYCODE(GLFW_KEY_O)},
+    {"P", KB_KEYCODE(GLFW_KEY_P)},
+    {"Q", KB_KEYCODE(GLFW_KEY_Q)},
+    {"R", KB_KEYCODE(GLFW_KEY_R)},
+    {"S", KB_KEYCODE(GLFW_KEY_S)},
+    {"T", KB_KEYCODE(GLFW_KEY_T)},
+    {"U", KB_KEYCODE(GLFW_KEY_U)},
+    {"V", KB_KEYCODE(GLFW_KEY_V)},
+    {"W", KB_KEYCODE(GLFW_KEY_W)},
+    {"X", KB_KEYCODE(GLFW_KEY_X)},
+    {"Y", KB_KEYCODE(GLFW_KEY_Y)},
+    {"Z", KB_KEYCODE(GLFW_KEY_Z)},
     {"SDL_A", CB_BUTTON(SDL_CONTROLLER_BUTTON_A)},
     {"SDL_B", CB_BUTTON(SDL_CONTROLLER_BUTTON_B)},
     {"SDL_X", CB_BUTTON(SDL_CONTROLLER_BUTTON_X)},
@@ -119,7 +120,7 @@ poll::KeyBindings poll::parse_keybinding(std::vector<std::string> toml)
 
 poll::PollState poll::PollState::create(void *window_handle, float axis_deadzone)
 {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS) < 0)
+    if (SDL_Init(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS) < 0)
     {
         panic("Error initializing sdl");
     }
@@ -142,18 +143,8 @@ poll::PollState poll::PollState::create(void *window_handle, float axis_deadzone
         }
     }
 
-    int windowFlags = 0;
-    if (CONFIG.fullscreen)
-        windowFlags |= SDL_WINDOW_FULLSCREEN;
-    SDL_Window *window = SDL_CreateWindowFrom(window_handle);
-    if (!window)
-    {
-        panic("Error creating sdl window");
-    }
-
     PollState pollState;
     pollState.controllers = controllers;
-    pollState.window = window;
     pollState.deadzone = axis_deadzone;
     pollState.keyboard_state = {};
     pollState.last_keyboard_state = {};
@@ -285,7 +276,7 @@ void poll::PollState::update()
             {
                 if (value > 1.f)
                     value = 1.f;
-                
+
                 this->axis_state.insert_or_assign(axis_positive, value);
                 this->axis_state.insert_or_assign(axis_negative, 0.f);
             }
@@ -305,25 +296,31 @@ void poll::PollState::update()
             }
             break;
         }
-        case SDL_KEYDOWN:
-        {
-            this->keyboard_state.push_back((SDL_KeyCode)event.key.keysym.sym);
-            break;
-        }
-        case SDL_KEYUP:
-        {
-            SDL_KeyCode keycode = (SDL_KeyCode)event.key.keysym.sym;
-
-            for (size_t i = 0; i < this->keyboard_state.size(); i++)
-            {
-                if (this->keyboard_state[i] == keycode)
-                {
-                    this->keyboard_state.erase(this->keyboard_state.begin() + i);
-                    i--;
-                }
-            }
-            break;
-        }
         }
     }
+
+    for (size_t i = 0; i < this->key_events.size(); i++)
+    {
+        if (this->key_events[i].action == GLFW_PRESS)
+        {
+            this->keyboard_state.push_back(this->key_events[i].key);
+        }
+        else if (this->key_events[i].action == GLFW_RELEASE)
+        {
+            for (size_t k = 0; k < this->keyboard_state.size(); k++)
+            {
+                if (this->keyboard_state[k] == this->key_events[i].key)
+                {
+                    this->keyboard_state.erase(this->keyboard_state.begin() + k);
+                    k--;
+                }
+            }
+        }
+    }
+    this->key_events.clear();
+}
+
+void poll::PollState::key_callback(int key, int scancode, int action, int mods)
+{
+    this->key_events.push_back({key, scancode, action, mods});
 }

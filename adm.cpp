@@ -76,6 +76,10 @@ extern void skibidigfx_glFramebufferTexture2D(GLenum target, GLenum attachment, 
 extern void skibidigfx_glBlitFramebuffer(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter);
 extern void skibidigfx_glClear(GLbitfield mask);
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    jamma::key_callback(key, scancode, action, mods);
+}
+
 AdmWindow *adm_window()
 {
     if (!glfwInit())
@@ -89,6 +93,8 @@ AdmWindow *adm_window()
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
+    
+    glfwSetKeyCallback(window, key_callback);
 
     window_hwnd = glfwGetWin32Window(window);
 
