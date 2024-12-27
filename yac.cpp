@@ -1,7 +1,7 @@
 #include "yac.h"
 #include <stdio.h>
 #include <unistd.h>
-#include <Windows.h>
+#include <windows.h>
 #include "shared/line.h"
 
 HANDLE YAC_PIPE;
