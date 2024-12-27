@@ -18,6 +18,8 @@
 Config CONFIG;
 KeyConfig KEYCONFIG;
 
+bool IS_BASE_MT3 = false;
+
 int undachi()
 {
     return 0;
@@ -235,6 +237,18 @@ int jmp_system(const char *command)
     return old_system(command);
 }
 
+#pragma pack(push, 1)
+struct RomInfo {
+    char name[32];
+    char region[32];
+    char release_type[32];
+    char date[32];
+    char time[32];
+    int revision;
+    char revision_name[32];
+};
+#pragma pack(pop)
+
 void init()
 {
     try
@@ -422,6 +436,16 @@ void init()
         yac_init();
 
     Line::Hook(Line::ResolveStub("system"), (void *)jmp_system, (void **)&old_system);
+
+    // skibidi
+    // im too lazy to port the entire GameVersion and RomInfo
+    RomInfo* romInfo = (RomInfo*)Line::DlSym(NULL, "gRomInfo");
+    if (romInfo) {
+        printf("revision name: %s\n", romInfo->revision_name);
+        if (strstr(romInfo->revision_name, "WM3100") != NULL) {
+            IS_BASE_MT3 = true;
+        }
+    }
 }
 
 void *lib_cg_so = NULL;

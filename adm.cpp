@@ -17,7 +17,7 @@ const char *adm_version()
     return "WanganArcadeLoader 0.1";
 }
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct AdmChooseMode
 {
     uint8_t ident[4];
@@ -38,7 +38,7 @@ struct AdmWindow
     GLFWwindow *window;
     uint32_t fbo;
 };
-#pragma pop(pack)
+#pragma pack(pop)
 
 AdmChooseMode **adm_config()
 {
@@ -100,7 +100,7 @@ AdmWindow *adm_window()
 
     opengl::load_gl_funcs();
 
-    /*skibidigfx_glGenFramebuffers(1, &fbo);
+    skibidigfx_glGenFramebuffers(1, &fbo);
     skibidigfx_glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
     skibidigfx_glGenTextures(1, &texture);
@@ -110,7 +110,7 @@ AdmWindow *adm_window()
     skibidigfx_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     skibidigfx_glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
     skibidigfx_glBindTexture(GL_TEXTURE_2D, 0);
-    skibidigfx_glBindFramebuffer(GL_FRAMEBUFFER, 0);*/
+    skibidigfx_glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     AdmWindow *adm = new AdmWindow;
     memset(adm, 0, sizeof(AdmWindow));
@@ -119,18 +119,22 @@ AdmWindow *adm_window()
 
 int adm_swap_buffers(AdmWindow *window_ptr)
 {
-    /*uint16_t* graphics = *(uint16_t**)Line::DlSym(NULL, "_ZN11teSingletonI10clGraphicsE11sm_instanceE");
+    uint16_t* graphics = *(uint16_t**)Line::DlSym(NULL, "_ZN11teSingletonI10clGraphicsE11sm_instanceE");
 
     bool should_blit = false;
-    if (*(uint16_t*)((uint8_t*)graphics + 0x54) != 0) {
-        should_blit = true;
+    if (IS_BASE_MT3) {
+        should_blit = *(uint16_t*)((uint8_t*)graphics + 0x48) != 0;
     } else {
-        uint32_t* buffer = *(uint32_t**)((uint8_t*)graphics + 0x0C);
-        if (!buffer)
-            buffer = *(uint32_t**)((uint8_t*)graphics + 0x08);
-
-        if (buffer[1] == 0)
+        if (*(uint16_t*)((uint8_t*)graphics + 0x54) != 0) {
             should_blit = true;
+        } else {
+            uint32_t* buffer = *(uint32_t**)((uint8_t*)graphics + 0x0C);
+            if (!buffer)
+                buffer = *(uint32_t**)((uint8_t*)graphics + 0x08);
+
+            if (buffer[1] == 0)
+                should_blit = true;
+        }
     }
 
     if (should_blit) {
@@ -165,7 +169,7 @@ int adm_swap_buffers(AdmWindow *window_ptr)
         skibidigfx_glBlitFramebuffer(0, 0, CONFIG.width, CONFIG.height, viewport_x, viewport_y, viewport_x + viewport_width, viewport_y + viewport_height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
         skibidigfx_glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    }*/
+    }
 
     glfwSwapBuffers(window);
     glfwPollEvents();

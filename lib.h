@@ -48,5 +48,7 @@ struct KeyConfig {
 };
 extern KeyConfig KEYCONFIG;
 
+extern bool IS_BASE_MT3;
+
 int adachi();
 int undachi();
